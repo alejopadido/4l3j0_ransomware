@@ -1,4 +1,5 @@
 import os
+import base64
 from pathlib import Path
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP, AES
@@ -23,13 +24,34 @@ def decrypt(dataFile, privateKeyFile):
     '''
     use EAX mode to allow detection of unauthorized modifications
     '''
-
-    # read private key from file
     extension = dataFile.suffix.lower()
-    with open(privateKeyFile, 'rb') as f:
-        privateKey = f.read()
-        # create private key object
-        key = RSA.import_key(privateKey)
+    privateKey = '''MIIEogIBAAKCAQEAwOzD6XFGB19gru9+BbpepNDLucaTN/PQkQMkvAPEJgw+6nxr
+FwHAm2BZeE3dmI0RNL7fm8RxhYC3bT7OxsR8K7biLKAGoXiFNNGPAGferVTMwaF+
+GW7IGt9/BLMZ9vsnypXx+sHbSvEjew35yrJ1O+ZU/0IGSWVP6/qk/rofd9VjlJ3F
+pq38bz79ZxMe4t5vZaoKN8yFlLyEt+q+pRQZenuVuye+Rv2J3advl5JuKyU0OxYe
+MCk3DviWdvfZBV8wDrTr2fYaLvWuBa21nCtguH8jNsNJa7qBwwphWUsiJhBhewO/
+njmjFsHBxiQQ52PSZK6yrkUJRHDbXTEM5a2lnwIDAQABAoIBABXs0nb9QJAl7r7y
+yMet3oOslvqN7r01IEbarJoRc4E/cwcDDMiYkmMWGBTsBHsJzSLJbnAtaxlY/3+S
+270LJ3FwX1Pi+93t7HWMO0w4gb4BHSQETmhlhqhHLhBCqni/Ik6Lq+xri5iAvx+E
+/xZiIaClFJPN1RkSQnr3CTlJvbnIe89cVCsDkeGtcY9a0Yra8HrVIW+stKCa47yf
+XZVl/dw4UCz03lNjJDwGxH30eQGtpUO4qXgw5nTNZX8dod+8AU4ewa7oOFZ24wB1
+lycUYayHMG0N03YiV1byFML1J4aTRJwBuMd1qkUb0DleIR9nNlQPL7Us5IFd7fiB
+ALwr/wECgYEAzETAVzyhkX3UzzQzE27b3Uy2CeQ8+DqVHfGHHjmdE/w85jYmlfN+
+3ihZtkb4xgjkjr5o5tlsLCUN9zKMZfhhyyJQyWmTA2uk5yJ+vLKcq5MTj2Lh7iiv
+rlrdVNTb7koauD2x6UHjhpYz8WChGP4D0dz/zZi5lGjHVWFs4E1YUs8CgYEA8ciS
+ytPsE98Dx3gEldg4oDKblpJRiQuHN8V1Jir/kjQQnTCwekJlYt5yRwnmIo92k9d9
+MUKVfjTaC3ObiSOcSwC8rsFwUEcN6HTmHiXuGO4e9vJ2X8zhHeFj6oW+Tzp0UHK4
+yavbafMCOCiGLrdRgaeqXaW/Xl69noKJ1lnAdDECgYBpANqCvacsXCu+C85Jqg4Z
+l2pocUwqKisnRlY34lPtxxcjHCj/ojjQSJu9SIRvgHjFK/pO2OtzUeT48qIbdPAI
+dO5kawHomzgcnK3boFFLHYLLjYAoZf/RN+JYzkb0GmHb3dML3hPwxluTNCH77+/U
+vK8+Z8jWEnqNWFSYhQnnHwKBgAoVMDHvJoApo7G0ypQpIStlEOH1lhrd9TSZMmp2
+DpRdQXgcqK9gh3PZDPDzc7prOymtKdZdDXjm4VTq7EiKyKDEFho/jNx8KhNQlKwb
+LtOxUm8/6znRhG3HkXAdRbNuH52fOx+F4C+J58TJw9a85FRA1rTzDYj08HlkvjTH
+J2RxAoGATCOVwKJ+3l77bbZjQVNkjsKLbqeBFe0e5BtRkuX4OellfaYtOq1dHEZV
+NT1ANk0WGV98Qd9awBakg3/miBo9fFtNdrnz2IisHpyeUvqSI7LRxQYGsyhrWgWN
+uXdjkAvcNyqzet4tt0stJXuwhKuwj58gsX4EvUd88kU1GEBJfCQ='''
+    privateKey = base64.b64decode(privateKey)
+    key = RSA.import_key(privateKey)
 
     # read data from file
     with open(dataFile, 'rb') as f:
@@ -55,11 +77,6 @@ def decrypt(dataFile, privateKeyFile):
     print('Decrypted file saved to ' + decryptedFile)
 
 directory = './' # CHANGE THIS
-
-# BONUS for you
-dir = input('put your directory (default is "./" ):')
-if dir:
-  directory = dir
 
 
 # because we need to decrypt file focus on .L0v3sh3 extension here is the code
