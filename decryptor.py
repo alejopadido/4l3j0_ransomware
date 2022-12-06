@@ -9,10 +9,6 @@ privateKeyFile = 'private.pem'
 
 
 def scanRecurse(baseDir):
-    '''
-    Scan a directory and return a list of all files
-    return: list of files
-    '''
     for entry in os.scandir(baseDir):
         if entry.is_file():
             yield entry
@@ -21,10 +17,9 @@ def scanRecurse(baseDir):
 
 
 def decrypt(dataFile, privateKeyFile):
-    '''
-    use EAX mode to allow detection of unauthorized modifications
-    '''
+    
     extension = dataFile.suffix.lower()
+    # a private key should never be put in the code, this is for easy of the example only
     privateKey = '''MIIEogIBAAKCAQEAwOzD6XFGB19gru9+BbpepNDLucaTN/PQkQMkvAPEJgw+6nxr
 FwHAm2BZeE3dmI0RNL7fm8RxhYC3bT7OxsR8K7biLKAGoXiFNNGPAGferVTMwaF+
 GW7IGt9/BLMZ9vsnypXx+sHbSvEjew35yrJ1O+ZU/0IGSWVP6/qk/rofd9VjlJ3F
@@ -76,16 +71,15 @@ uXdjkAvcNyqzet4tt0stJXuwhKuwj58gsX4EvUd88kU1GEBJfCQ='''
 
     print('Decrypted file saved to ' + decryptedFile)
 
-directory = './' # CHANGE THIS
+directory = './'
 
 
-# because we need to decrypt file focus on .L0v3sh3 extension here is the code
-includeExtension = ['.4l3j0'] # CHANGE THIS make sure all is lower case
+# we need to decrypt file focus on .4l3j0 extension here is the code
+includeExtension = ['.4l3j0']
 
 for item in scanRecurse(directory): 
     filePath = Path(item)
     fileType = filePath.suffix.lower()
-    # run the decryptor just if the extension is .l0v3sh3
+    # run the decryptor just if the extension is .4l3j0
     if fileType in includeExtension:
-      #print(Path(filePath)) # testing the scanning file
       decrypt(filePath, privateKeyFile)
